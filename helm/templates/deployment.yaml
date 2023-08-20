@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: {{ .Release.Name }}
+  name: {{ .Release.Name }}
+  namespace: cloudru
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      run: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        run: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: 8000
+          env:
+            - name: UUID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.uid
+            - name: AUTHOR
+              value: {{ .Values.author }}
+            - name: APP_ENV
+              value: {{ .Values.app_env }}
+      readinessProbe:
+        httpGet:
+          path: /hostname
+          port: 8000
+        initialDelaySeconds: 5
+        periodSeconds: 10
+      livenessProbe:
+        httpGet:
+          path: /hostname
+          port: 8000
+        initialDelaySeconds: 15
+        periodSeconds: 20

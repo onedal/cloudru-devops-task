@@ -1,0 +1,6 @@
+image:
+  repository: mega6obep/cloudru-app
+  tag: latest
+replicaCount: 3
+author: Fyodor Dostoevsky
+app_env: development

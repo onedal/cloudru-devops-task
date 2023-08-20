@@ -18,8 +18,7 @@ USER myuser
 
 WORKDIR /home/app
 COPY --chown=app . ./
-# Открываем порт, который будет слушать наше приложение
+
 EXPOSE 8000
 
-# Запускаем ваше приложение при старте контейнера
 CMD ["python", "app.py"]
