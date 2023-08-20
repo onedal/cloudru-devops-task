@@ -1,0 +1,7 @@
+# sshd_config.j2
+{% if ansible_distribution == 'Ubuntu' %}
+PermitRootLogin no
+{% endif %}
+PasswordAuthentication no
+PubkeyAuthentication yes
+AuthorizedKeysFile  .ssh/authorized_keys
