@@ -9,23 +9,19 @@
         name: cloudru
         password: "{{ 'cloudpass' | password_hash('sha512') }}"
         state: present
-    - name: Allow SSH key authentication
-      template:
-        src: sshd_config.j2
-        dest: /etc/ssh/sshd_config
-      notify:
-        - Reload SSH
+
+    - name: Copy public SSH key
+      authorized_key:
+        user: cloudru
+        key: "{{ lookup('file', 'public_key') }}"
+        state: present
+
     - name: Disable root SSH login
       template:
         src: sshd_config.j2
         dest: /etc/ssh/sshd_config
       notify:
         - Reload SSH
-    - name: Copy public SSH key
-      authorized_key:
-        user: cloudru
-        key: "{{ lookup('file', 'public_key') }}"
-        state: present
 
   handlers:
     - name: Reload SSH
