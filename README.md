@@ -1,15 +1,15 @@
 # cloudru-devops-task
 
-(Основная задача)[https://github.com/devopscloudrucamp/tasks]
+Main task [https://github.com/devopscloudrucamp/tasks]
 # Description
-Веб-приложение на Python предоставляет HTTP API с тремя методами для получения информации о хосте, авторе и идентификаторе пользователя.
+The Python web application provides an HTTP API with three methods for getting host, author, and user ID information.
 
 Image mega6obep/cloudru-app
 
-**Примечания**: 
-Дополнительно создал енв для среды приложения, а то без него чего то нехватает.
+**Attention**: 
+Additionally, I created an env for the application environment, otherwise something is missing without it.
 
-Dockerfile создан как будто планируется собирать пакеты, к сожалению в приложении нет каких то внешних пакетов, но я оставил такой подход (т.к в реальных проектах они всегда есть)
+The Dockerfile was created as if it were planned to build packages, unfortunately there are no external packages in the application, but I left this approach (because real projects always have them)
 
 ### How start local
 ```bash
@@ -40,7 +40,6 @@ kubectl apply -f configmap.yaml
 kubectl apply -f service
 ```
 
-
 Create app in k8s from helm
 ```bash
 helm install cloudru-app ./helm -f helm/values/development.yaml
@@ -48,4 +47,9 @@ or
 helm upgrade cloudru-app ./helm -f helm/values/development.yaml
 ```
 
-
+### How work with playbook
+Change public_key to own
+```bash
+ansible-playbook playbook/playbook.yml
+```
+Performance tested on ec2 Ubuntu 22.04.

@@ -1,0 +1,30 @@
+---
+- name: Configure Ubuntu Server
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Create a new user
+      user:
+        name: cloudru
+        password: "{{ 'cloudpass' | password_hash('sha512') }}"
+        state: present
+
+    - name: Copy public SSH key
+      authorized_key:
+        user: cloudru
+        key: "{{ lookup('file', 'public_key') }}"
+        state: present
+
+    - name: Disable root SSH login
+      template:
+        src: sshd_config.j2
+        dest: /etc/ssh/sshd_config
+      notify:
+        - Reload SSH
+
+  handlers:
+    - name: Reload SSH
+      systemd:
+        name: ssh
+        state: restarted
