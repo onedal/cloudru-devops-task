@@ -43,8 +43,6 @@ kubectl apply -f service
 Create app in k8s from helm
 ```bash
 helm install cloudru-app ./helm -f helm/values/development.yaml
-or
-helm upgrade cloudru-app ./helm -f helm/values/development.yaml
 ```
 
 ### How work with playbook
